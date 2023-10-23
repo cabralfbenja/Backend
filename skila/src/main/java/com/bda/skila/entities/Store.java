@@ -1,5 +1,6 @@
 package com.bda.skila.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,10 @@ public class Store {
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Customer> customers;
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Inventory> inventories;
 
 }

@@ -1,5 +1,6 @@
 package com.bda.skila.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,13 +27,14 @@ public class Film {
     private String description;
 
     @Column(name = "release_year")
-    private Date releaseYear;
+    private String releaseYear;
 
-    @Column(name = "language_year")
+    @Column(name = "language_id")
     private short languageId;
 
     @Column(name = "original_language_id")
-    private short originalLanguageId;
+    private Long originalLanguageId;
+
 
     @Column(name = "rental_duration")
     private short rentalDuration;
@@ -56,6 +58,7 @@ public class Film {
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "film", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Inventory> inventories;
 
 }

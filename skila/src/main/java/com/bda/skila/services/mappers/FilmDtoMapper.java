@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 @Service
 public class FilmDtoMapper implements Function<Film, FilmDto> {
+
     @Override
     public FilmDto apply(Film film) {
         return new FilmDto(
@@ -15,7 +16,6 @@ public class FilmDtoMapper implements Function<Film, FilmDto> {
                 film.getDescription(),
                 film.getReleaseYear(),
                 film.getLanguageId(),
-                film.getOriginalLanguageId(),
                 film.getRentalDuration(),
                 film.getRentalRate(),
                 film.getLength(),

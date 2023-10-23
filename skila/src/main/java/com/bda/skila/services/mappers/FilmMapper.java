@@ -17,7 +17,7 @@ public class FilmMapper implements Function<FilmDto, Film> {
                 filmDto.getDescription(),
                 filmDto.getReleaseYear(),
                 filmDto.getLanguageId(),
-                filmDto.getOriginalLanguageId(),
+                1L,
                 filmDto.getRentalDuration(),
                 filmDto.getRentalRate(),
                 filmDto.getLength(),

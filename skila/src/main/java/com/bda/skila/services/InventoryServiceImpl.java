@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class InventoryServiceImpl implements InventoryService{
 
-    private InventoryRepository repository;
+    private final InventoryRepository repository;
     public InventoryServiceImpl(InventoryRepository repository){
         this.repository = repository;
     }

@@ -22,7 +22,6 @@ public class Customer {
 
     @ManyToOne
     @JoinColumn(name="store_id", nullable=false)
-    @JsonIgnore
     private Store store;
 
     @Column(name = "first_name")
@@ -39,7 +38,7 @@ public class Customer {
     private Address address;
 
     @Basic
-    private char active;
+    private boolean active;
 
     @Column(name = "create_date")
     private Date createdDate;

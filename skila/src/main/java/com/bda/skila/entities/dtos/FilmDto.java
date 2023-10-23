@@ -13,9 +13,8 @@ public class FilmDto {
     private long filmId;
     private String title;
     private String description;
-    private Date releaseYear;
+    private String releaseYear;
     private short languageId;
-    private short originalLanguageId;
     private short rentalDuration;
     private double rentalRate;
     private short length;
