@@ -1,11 +1,12 @@
 package com.bda.skila.services;
 
 import com.bda.skila.entities.Customer;
+import com.bda.skila.entities.Store;
 import com.bda.skila.entities.dtos.CustomerDto;
 import com.bda.skila.repositories.CustomerRepository;
+import com.bda.skila.repositories.StoreRepository;
 import com.bda.skila.services.mappers.CustomerDtoMapper;
 import com.bda.skila.services.mappers.CustomerMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +17,15 @@ import java.util.stream.Stream;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
+    private final StoreRepository storeRepository;
     private final CustomerDtoMapper dtoMapper;
     private final CustomerMapper mapper;
 
     public CustomerServiceImpl(CustomerRepository repository,
-                               CustomerDtoMapper dtoMapper,
+                               StoreRepository storeRepository, CustomerDtoMapper dtoMapper,
                                CustomerMapper mapper){
         this.repository = repository;
+        this.storeRepository = storeRepository;
         this.dtoMapper = dtoMapper;
         this.mapper = mapper;
     }
@@ -30,8 +33,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto add(CustomerDto entity) {
         Optional<Customer> customer =  Stream.of(entity).map(mapper).findFirst();
-        customer.ifPresent(repository::save);
-        return customer.map(dtoMapper).orElseThrow();
+
+        if(storeRepository.findFirstByAddress_CityId(entity.getAddress().getCityId()) != null){
+            customer.ifPresent(repository::save);
+            return customer.map(dtoMapper).orElseThrow();
+        }
+        return null;
 
     }
 

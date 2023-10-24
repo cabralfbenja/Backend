@@ -24,11 +24,9 @@ public class Customer {
             initialValue=1, allocationSize=1)
     private long customerId;
 
-    //@ManyToOne(cascade = CascadeType.PERSIST)
-    //@JoinColumn(name="store_id")
-    //private Store store;
-    @Column(name="store_id")
-    private long storeId;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="store_id")
+    private Store store;
 
     @Column(name = "first_name")
     private String firstName;

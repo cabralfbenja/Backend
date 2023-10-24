@@ -33,9 +33,10 @@ public class Store {
     @Column(name = "last_update")
     private Date lastUpdate;
 
-    //@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
-    //@JsonIgnore
-    //private List<Customer> customers;
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Customer> customers;
+
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Inventory> inventories;

@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 public class CustomerMapper implements Function<CustomerDto, Customer> {
     private AddressMapper entityMapper;
 
+
     @Autowired
     public CustomerMapper(AddressMapper entityMapper) {
         this.entityMapper = entityMapper;
@@ -38,7 +39,8 @@ public class CustomerMapper implements Function<CustomerDto, Customer> {
         customer.setEmail(customerDto.getEmail());
         customer.setCreatedDate(new Date());
         customer.setLastUpdate(new Date());
-        customer.setStoreId(0);
+
+
 
         return customer;
     }
