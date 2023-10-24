@@ -29,9 +29,8 @@ public class Address {
     @Basic
     private String district;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @Column(name = "city_id")
+    private long cityId;
 
     @Column(name = "postal_code")
     private String postalCode;
