@@ -12,9 +12,6 @@ public class CustomerDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String address;
-    private Long cityId;
-    private String postalCode;
-
+    private AddressDto address;
 }
 

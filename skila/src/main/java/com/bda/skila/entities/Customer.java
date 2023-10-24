@@ -2,6 +2,7 @@ package com.bda.skila.entities;
 
 import com.bda.skila.entities.dtos.AddressDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,16 +14,21 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="customer")
+@Table(name="customer_dg_tmp")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "customer_dg_tmp")
+    @TableGenerator(name = "customer_dg_tmp", table = "sqlite_sequence",
+            pkColumnName = "name", valueColumnName = "seq",
+            pkColumnValue="customer_dg_tmp",
+            initialValue=1, allocationSize=1)
     private long customerId;
 
-    @ManyToOne
-    @JoinColumn(name="store_id", nullable=false)
-    private Store store;
+    //@ManyToOne(cascade = CascadeType.PERSIST)
+    //@JoinColumn(name="store_id")
+    //private Store store;
+    @Column(name="store_id")
+    private long storeId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -33,8 +39,8 @@ public class Customer {
     @Basic
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name="address_id", nullable=false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="address_id")
     private Address address;
 
     @Basic

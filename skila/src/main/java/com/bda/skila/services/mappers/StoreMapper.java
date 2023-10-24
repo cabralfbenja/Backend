@@ -16,8 +16,8 @@ public class StoreMapper implements Function<StoreDto, Store> {
                 storeDto.getManagerStaffId(),
                 storeDto.getAddress(),
                 new Date(),
-                new ArrayList<>(),
                 new ArrayList<>()
+                //,new ArrayList<>()
                 );
     }
 

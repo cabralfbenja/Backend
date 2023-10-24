@@ -1,6 +1,7 @@
 package com.bda.skila.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,11 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "address")
+@Table(name = "address_dg_tmp")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
+    @GeneratedValue(generator = "address_dg_tmp")
+    @TableGenerator(name = "address_dg_tmp", table = "sqlite_sequence",
+            pkColumnName = "name", valueColumnName = "seq",
+            pkColumnValue="address_dg_tmp",
+            initialValue=1, allocationSize=1)
     private long addressId;
 
     @Basic

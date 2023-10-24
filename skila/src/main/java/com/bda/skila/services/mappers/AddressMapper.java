@@ -14,17 +14,15 @@ import java.util.function.Function;
 public class AddressMapper implements Function<AddressDto, Address> {
     @Override
     public Address apply(AddressDto addressDto){
-        return new Address(
-                addressDto.getAddressId(),
-                addressDto.getAddress(),
-                addressDto.getAddress2(),
-                addressDto.getDistrict(),
-                addressDto.getCityId(),
-                addressDto.getPostalCode(),
-                addressDto.getPhone(),
-                new Date(),
-                new ArrayList<Customer>(),
-                new ArrayList<Store>()
-        );
+        Address address = new Address();
+        address.setAddress(addressDto.getAddress());
+        address.setCityId(addressDto.getCityId());
+        address.setPostalCode(address.getPostalCode());
+        address.setAddress2("");
+        address.setDistrict("");
+        address.setPhone("");
+        address.setLastUpdate(new Date());
+
+        return address;
     }
 }

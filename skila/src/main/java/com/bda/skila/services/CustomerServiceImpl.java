@@ -1,9 +1,11 @@
 package com.bda.skila.services;
 
 import com.bda.skila.entities.Customer;
-import com.bda.skila.entities.Inventory;
 import com.bda.skila.entities.dtos.CustomerDto;
 import com.bda.skila.repositories.CustomerRepository;
+import com.bda.skila.services.mappers.CustomerDtoMapper;
+import com.bda.skila.services.mappers.CustomerMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,40 +15,56 @@ import java.util.stream.Stream;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private CustomerRepository repository;
+    private final CustomerRepository repository;
+    private final CustomerDtoMapper dtoMapper;
+    private final CustomerMapper mapper;
 
-    public CustomerServiceImpl(CustomerRepository repository){
+    public CustomerServiceImpl(CustomerRepository repository,
+                               CustomerDtoMapper dtoMapper,
+                               CustomerMapper mapper){
         this.repository = repository;
+        this.dtoMapper = dtoMapper;
+        this.mapper = mapper;
     }
 
     @Override
-    public Customer add(Customer entity) {
-        this.repository.save(entity);
-        return entity;
+    public CustomerDto add(CustomerDto entity) {
+        Optional<Customer> customer =  Stream.of(entity).map(mapper).findFirst();
+        customer.ifPresent(repository::save);
+        return customer.map(dtoMapper).orElseThrow();
 
     }
 
     @Override
-    public Customer update(Customer entity) {
-        this.repository.save(entity);
-        return entity;
+    public CustomerDto update(CustomerDto entity) {
+        Optional<Customer> customer =  Stream.of(entity).map(mapper).findFirst();
+        customer.ifPresent(repository::save);
+        return customer.map(dtoMapper).orElseThrow();
     }
 
     @Override
-    public Customer delete(Long id) {
-        Customer customer = this.getById(id);
-        if(customer != null)
-            this.repository.delete(customer);
+    public CustomerDto delete(Long id) {
+        CustomerDto customer = this.getById(id);
+        if(customer != null){
+            Optional<Customer> entity =  Stream.of(customer).map(mapper).findFirst();
+            entity.ifPresent(repository::delete);
+        }
+
         return customer;
     }
 
     @Override
-    public Customer getById(Long id) {
-        return this.repository.findById(id).orElse(null);
+    public CustomerDto getById(Long id) {
+        Optional<Customer> customer = this.repository.findById(id);
+        return customer.map(dtoMapper).orElseThrow();
     }
 
     @Override
-    public List<Customer> getAll() {
-        return this.repository.findAll();
+    public List<CustomerDto> getAll() {
+        List<Customer> customers = this.repository.findAll();
+        return customers
+                .stream()
+                .map(dtoMapper)
+                .toList();
     }
 }
