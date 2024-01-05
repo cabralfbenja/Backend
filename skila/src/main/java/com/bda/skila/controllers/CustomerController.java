@@ -37,9 +37,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(customerDto);
         }
         Store store = storeRepository.findFirstByAddress_CityId(customer.getAddress().getCityId());
-        if(store == null){
-            return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(customerDto);
-        }
+
 
     }
 }
